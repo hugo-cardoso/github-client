@@ -1,15 +1,29 @@
 {
-  "name": "github-client",
+  "name": "github-api-client",
   "version": "1.0.0",
-  "description": "",
+  "description": "Client for Github API v3.",
   "main": "app.js",
   "scripts": {
     "clear": "rimraf dist/*",
     "build": "npm run clear && ./node_modules/.bin/webpack --colors --progress",
     "build:watch": "npm run build -- --watch"
   },
-  "author": "Hugo Cardoso",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tunadao1/github-client.git"
+  },
+  "author": "Hugo Cardoso <hugorafaelmc@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "github",
+    "api",
+    "library",
+    "client"
+  ],
+  "bugs": {
+    "url": "https://github.com/tunadao1/github-client/issues"
+  },
+  "homepage": "https://github.com/tunadao1/github-client#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",

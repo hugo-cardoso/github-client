@@ -7,8 +7,8 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist'),
         libraryTarget: "umd",
-        filename: "github-client.js",
-        library: "GithubClient"
+        filename: "github-api-client.js",
+        library: "GithubApiClient"
     },
     module: {
         loaders: [

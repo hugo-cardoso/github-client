@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["GithubClient"] = factory();
+		exports["GithubApiClient"] = factory();
 	else
-		root["GithubClient"] = factory();
+		root["GithubApiClient"] = factory();
 })(typeof self !== 'undefined' ? self : this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -80,80 +80,9 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 
-module.exports = __webpack_require__(1).default;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _GithubService = __webpack_require__(10);
-
-var _GithubService2 = _interopRequireDefault(_GithubService);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var GithubClient = function () {
-  function GithubClient() {
-    _classCallCheck(this, GithubClient);
-
-    this.githubService = new _GithubService2.default();
-  }
-
-  _createClass(GithubClient, [{
-    key: 'getUserInfo',
-    value: function getUserInfo(username) {
-
-      this.githubService.getUserInfoByName(username).then(function (res) {
-
-        console.log(res.data);
-      });
-    }
-  }, {
-    key: 'getUserRepos',
-    value: function getUserRepos(username) {
-
-      this.githubService.getUserReposByName(username).then(function (res) {
-
-        console.log(res.data);
-      });
-    }
-  }, {
-    key: 'getIssues',
-    value: function getIssues(username, repository) {
-
-      this.githubService.getIssues(username, repository).then(function (res) {
-
-        console.log(res.data);
-      });
-    }
-  }]);
-
-  return GithubClient;
-}();
-
-exports.default = GithubClient;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var bind = __webpack_require__(4);
+var bind = __webpack_require__(2);
 var isBuffer = __webpack_require__(14);
 
 /*global toString:true*/
@@ -453,13 +382,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 3 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(0);
 var normalizeHeaderName = __webpack_require__(16);
 
 var DEFAULT_CONTENT_TYPE = {
@@ -476,10 +405,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(6);
+    adapter = __webpack_require__(4);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(6);
+    adapter = __webpack_require__(4);
   }
   return adapter;
 }
@@ -547,10 +476,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 });
 
 module.exports = defaults;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 4 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -567,7 +496,7 @@ module.exports = function bind(fn, thisArg) {
 };
 
 /***/ }),
-/* 5 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -760,18 +689,18 @@ process.umask = function () {
 };
 
 /***/ }),
-/* 6 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(0);
 var settle = __webpack_require__(17);
 var buildURL = __webpack_require__(19);
 var parseHeaders = __webpack_require__(20);
 var isURLSameOrigin = __webpack_require__(21);
-var createError = __webpack_require__(7);
+var createError = __webpack_require__(5);
 var btoa = typeof window !== 'undefined' && window.btoa && window.btoa.bind(window) || __webpack_require__(22);
 
 module.exports = function xhrAdapter(config) {
@@ -938,10 +867,10 @@ module.exports = function xhrAdapter(config) {
     request.send(requestData);
   });
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 7 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -965,7 +894,7 @@ module.exports = function createError(message, config, code, request, response) 
 };
 
 /***/ }),
-/* 8 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -976,7 +905,7 @@ module.exports = function isCancel(value) {
 };
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1000,6 +929,77 @@ Cancel.prototype.toString = function toString() {
 Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(9).default;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _GithubService = __webpack_require__(10);
+
+var _GithubService2 = _interopRequireDefault(_GithubService);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GithubClient = function () {
+  function GithubClient() {
+    _classCallCheck(this, GithubClient);
+
+    this.githubService = new _GithubService2.default();
+  }
+
+  _createClass(GithubClient, [{
+    key: 'getUserInfo',
+    value: function getUserInfo(username) {
+
+      this.githubService.getUserInfoByName(username).then(function (res) {
+
+        console.log(res.data);
+      });
+    }
+  }, {
+    key: 'getUserRepos',
+    value: function getUserRepos(username) {
+
+      this.githubService.getUserReposByName(username).then(function (res) {
+
+        console.log(res.data);
+      });
+    }
+  }, {
+    key: 'getIssues',
+    value: function getIssues(username, repository) {
+
+      this.githubService.getIssues(username, repository).then(function (res) {
+
+        console.log(res.data);
+      });
+    }
+  }]);
+
+  return GithubClient;
+}();
+
+exports.default = GithubClient;
 
 /***/ }),
 /* 10 */
@@ -1110,10 +1110,10 @@ module.exports = __webpack_require__(13);
 "use strict";
 
 
-var utils = __webpack_require__(2);
-var bind = __webpack_require__(4);
+var utils = __webpack_require__(0);
+var bind = __webpack_require__(2);
 var Axios = __webpack_require__(15);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(1);
 
 /**
  * Create an instance of Axios
@@ -1146,9 +1146,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(9);
+axios.Cancel = __webpack_require__(7);
 axios.CancelToken = __webpack_require__(29);
-axios.isCancel = __webpack_require__(8);
+axios.isCancel = __webpack_require__(6);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -1197,8 +1197,8 @@ function isSlowBuffer(obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
-var utils = __webpack_require__(2);
+var defaults = __webpack_require__(1);
+var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(24);
 var dispatchRequest = __webpack_require__(25);
 
@@ -1282,7 +1282,7 @@ module.exports = Axios;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(0);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -1300,7 +1300,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(7);
+var createError = __webpack_require__(5);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -1354,7 +1354,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(0);
 
 function encode(val) {
   return encodeURIComponent(val).replace(/%40/gi, '@').replace(/%3A/gi, ':').replace(/%24/g, '$').replace(/%2C/gi, ',').replace(/%20/g, '+').replace(/%5B/gi, '[').replace(/%5D/gi, ']');
@@ -1419,7 +1419,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(0);
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -1475,7 +1475,7 @@ module.exports = function parseHeaders(headers) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(0);
 
 module.exports = utils.isStandardBrowserEnv() ?
 
@@ -1585,7 +1585,7 @@ module.exports = btoa;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(0);
 
 module.exports = utils.isStandardBrowserEnv() ?
 
@@ -1644,7 +1644,7 @@ function nonStandardBrowserEnv() {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(0);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -1702,10 +1702,10 @@ module.exports = InterceptorManager;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(0);
 var transformData = __webpack_require__(26);
-var isCancel = __webpack_require__(8);
-var defaults = __webpack_require__(3);
+var isCancel = __webpack_require__(6);
+var defaults = __webpack_require__(1);
 var isAbsoluteURL = __webpack_require__(27);
 var combineURLs = __webpack_require__(28);
 
@@ -1775,7 +1775,7 @@ module.exports = function dispatchRequest(config) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(0);
 
 /**
  * Transform the data for a request or a response
@@ -1842,7 +1842,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(9);
+var Cancel = __webpack_require__(7);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
