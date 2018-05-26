@@ -15,21 +15,18 @@ class GithubClient {
     return this.httpService.get(`${ this.BASEURL }/users/${ username }`);
   }
 
-  repos( data ) {
+  repos( { username, page=1, limit=50 } ) {
 
-    if( !data || !(data.hasOwnProperty('username')) ) throw new War("Missing parameters.");
+    if( !username ) throw new War("Missing parameters.");  
 
-    const page  = data.page || 1;
-    const limit = data.limit || 100;    
-
-    return this.httpService.get(`${ this.BASEURL }/users/${ data.username }/repos?page=${ page }&per_page=${ limit }`);
+    return this.httpService.get(`${ this.BASEURL }/users/${ username }/repos?page=${ page }&per_page=${ limit }`);
   }
   
-  issues( data ) {
+  issues( { username, repository } ) {
 
-    if( !data || !(data.hasOwnProperty('username')) && !(data.hasOwnProperty('repository')) ) throw new War("Missing parameters.");
+    if( !username || !repository ) throw new Error("Missing parameters.");
 
-    return this.httpService.get(`${ this.BASEURL }/repos/${ data.username }/${ data.repository }/issues`);
+    return this.httpService.get(`${ this.BASEURL }/repos/${ username }/${ repository }/issues`);
   }
 
 }

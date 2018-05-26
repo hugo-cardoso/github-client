@@ -15,10 +15,10 @@
 
         ghClient.user('tunadao1').then(res => console.log(res.data));
 
-        ghClient.repos({username: 'tunadao1', page: 2, limit: 10}).then(res => console.log(res.data));
+        ghClient.repos({username: 'tunadao1', page: 1}).then(res => console.log(res.data));
 
         ghClient.issues({username: 'tunadao1', repository: 'github-client'}).then(res => console.log(res.data));
-        
+
     </script>
 </body>
 </html>
