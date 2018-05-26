@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Github API Client</title>
+</head>
+<body>
+    
+    <script src="../dist/github-api-client.js"></script>
+    <script>
+
+        const ghClient = new GithubApiClient();
+
+        ghClient.user('tunadao1').then(res => console.log(res.data));
+
+        ghClient.repos({username: 'tunadao1', page: 2, limit: 10}).then(res => console.log(res.data));
+
+        ghClient.issues({username: 'tunadao1', repository: 'github-client'}).then(res => console.log(res.data));
+        
+    </script>
+</body>
+</html>
