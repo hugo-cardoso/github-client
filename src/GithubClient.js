@@ -17,7 +17,7 @@ class GithubClient {
 
   repos( { username, page=1, limit=50 } ) {
 
-    if( !username ) throw new War("Missing parameters.");  
+    if( !username ) throw new Error("Missing parameters.");  
 
     return this.httpService.get(`${ this.BASEURL }/users/${ username }/repos?page=${ page }&per_page=${ limit }`);
   }

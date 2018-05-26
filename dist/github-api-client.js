@@ -129,7 +129,7 @@ var GithubClient = function () {
           limit = _ref$limit === undefined ? 50 : _ref$limit;
 
 
-      if (!username) throw new War("Missing parameters.");
+      if (!username) throw new Error("Missing parameters.");
 
       return this.httpService.get(this.BASEURL + '/users/' + username + '/repos?page=' + page + '&per_page=' + limit);
     }
