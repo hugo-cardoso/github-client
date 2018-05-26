@@ -952,9 +952,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _GithubService = __webpack_require__(10);
+var _HttpService = __webpack_require__(11);
 
-var _GithubService2 = _interopRequireDefault(_GithubService);
+var _HttpService2 = _interopRequireDefault(_HttpService);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -964,35 +964,36 @@ var GithubClient = function () {
   function GithubClient() {
     _classCallCheck(this, GithubClient);
 
-    this.githubService = new _GithubService2.default();
+    this.BASEURL = 'https://api.github.com';
+    this.httpService = new _HttpService2.default();
   }
 
   _createClass(GithubClient, [{
-    key: 'getUserInfo',
-    value: function getUserInfo(username) {
+    key: 'user',
+    value: function user(username) {
 
-      this.githubService.getUserInfoByName(username).then(function (res) {
+      if (!username) throw new Error("Missing parameters.");
 
-        console.log(res.data);
-      });
+      return this.httpService.get(this.BASEURL + '/users/' + username);
     }
   }, {
-    key: 'getUserRepos',
-    value: function getUserRepos(username) {
+    key: 'repos',
+    value: function repos(data) {
 
-      this.githubService.getUserReposByName(username).then(function (res) {
+      if (!data || !data.hasOwnProperty('username')) throw new War("Missing parameters.");
 
-        console.log(res.data);
-      });
+      var page = data.page || 1;
+      var limit = data.limit || 100;
+
+      return this.httpService.get(this.BASEURL + '/users/' + data.username + '/repos?page=' + page + '&per_page=' + limit);
     }
   }, {
-    key: 'getIssues',
-    value: function getIssues(username, repository) {
+    key: 'issues',
+    value: function issues(data) {
 
-      this.githubService.getIssues(username, repository).then(function (res) {
+      if (!data || !data.hasOwnProperty('username') && !data.hasOwnProperty('repository')) throw new War("Missing parameters.");
 
-        console.log(res.data);
-      });
+      return this.httpService.get(this.BASEURL + '/repos/' + data.username + '/' + data.repository + '/issues');
     }
   }]);
 
@@ -1002,60 +1003,7 @@ var GithubClient = function () {
 exports.default = GithubClient;
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _HttpService = __webpack_require__(11);
-
-var _HttpService2 = _interopRequireDefault(_HttpService);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var GithubService = function () {
-  function GithubService(key) {
-    _classCallCheck(this, GithubService);
-
-    this.BASEURL = 'https://api.github.com';
-    this.httpService = new _HttpService2.default(key);
-  }
-
-  _createClass(GithubService, [{
-    key: 'getUserInfoByName',
-    value: function getUserInfoByName(username) {
-
-      return this.httpService.get(this.BASEURL + '/users/' + username);
-    }
-  }, {
-    key: 'getUserReposByName',
-    value: function getUserReposByName(username) {
-
-      return this.httpService.get(this.BASEURL + '/users/' + username + '/repos');
-    }
-  }, {
-    key: 'getIssues',
-    value: function getIssues(username, repository) {
-
-      return this.httpService.get(this.BASEURL + '/repos/' + username + '/' + repository + '/issues');
-    }
-  }]);
-
-  return GithubService;
-}();
-
-exports.default = GithubService;
-
-/***/ }),
+/* 10 */,
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 

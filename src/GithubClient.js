@@ -1,34 +1,35 @@
-import GithubService from './GithubService';
+import HttpService from './HttpService';
 
 class GithubClient {
 
   constructor() {
 
-    this.githubService = new GithubService();
+    this.BASEURL = 'https://api.github.com';
+    this.httpService = new HttpService();
   }
 
-  getUserInfo( username ) {
+  user( username ) {
 
-    this.githubService.getUserInfoByName( username ).then(res => {
+    if( !username ) throw new Error("Missing parameters.");
 
-      console.log(res.data);
-    });
+    return this.httpService.get(`${ this.BASEURL }/users/${ username }`);
   }
 
-  getUserRepos( username ) {
+  repos( data ) {
 
-    this.githubService.getUserReposByName( username ).then(res => {
+    if( !data || !(data.hasOwnProperty('username')) ) throw new War("Missing parameters.");
 
-      console.log(res.data);
-    });
+    const page  = data.page || 1;
+    const limit = data.limit || 100;    
+
+    return this.httpService.get(`${ this.BASEURL }/users/${ data.username }/repos?page=${ page }&per_page=${ limit }`);
   }
   
-  getIssues( username, repository ) {
+  issues( data ) {
 
-    this.githubService.getIssues( username, repository ).then(res => {
+    if( !data || !(data.hasOwnProperty('username')) && !(data.hasOwnProperty('repository')) ) throw new War("Missing parameters.");
 
-      console.log(res.data);
-    });
+    return this.httpService.get(`${ this.BASEURL }/repos/${ data.username }/${ data.repository }/issues`);
   }
 
 }
