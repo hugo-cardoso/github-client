@@ -11,7 +11,7 @@ npm i github-api-client --save
 ## How to use
 
 ```js
-import GithubApiClient from 'GithubApiClient';
+import GithubApiClient from 'github-api-client';
 
 const ghClient = new GithubApiClient();
 ```
