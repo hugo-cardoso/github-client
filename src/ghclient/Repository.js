@@ -1,31 +1,33 @@
 import HttpService from '../services/HttpService';
 import CONFIG from '../config';
 
-class Search {
+class Repository {
 
-  user( query, options={} ) {
+  constructor(name) {
 
-    if( !query ) throw new Error("Missing parameters.");
-
-    const { sort, order } = options;
-
-    const url = `${ CONFIG.urls.base }/search/users`;
-    const urlParams = `?q=${ query }${sort ? `&sort=${ sort }${ order ? `&order=${ order }` : '' }` : ''}`;
-
-    return HttpService.get(`${ url }${ urlParams }`);
+    if( !name ) throw new Error("Missing Name parameter.");
+    this.name = name;
   }
 
-  repository( query, options={} ) {
+  issues() {
 
-    if( !query ) throw new Error("Missing parameters.");
+    return HttpService.get(`${ CONFIG.urls.base }/repos/${ this.name }/issues`);
+  }
 
-    const { sort, order } = options;
+  branches() {
 
-    const url = `${ CONFIG.urls.base }/search/repositories`;
-    const urlParams = `?q=${ query }${sort ? `&sort=${ sort }${ order ? `&order=${ order }` : '' }` : ''}`;
+    return HttpService.get(`${ CONFIG.urls.base }/repos/${ this.name }/branches`);
+  }
 
-    return HttpService.get(`${ url }${ urlParams }`);
+  releases() {
+
+    return HttpService.get(`${ CONFIG.urls.base }/repos/${ this.name }/releases`);
+  }
+
+  commits() {
+
+    return HttpService.get(`${ CONFIG.urls.base }/repos/${ this.name }/commits`);
   }
 }
 
-export default Search;
+export default Repository;

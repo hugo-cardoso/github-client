@@ -7,17 +7,22 @@
     <title>Github API Client</title>
 </head>
 <body>
-    
+
     <script src="../dist/github-api-client.js"></script>
     <script>
 
-        const ghClient = new GithubApiClient();
+        const ghClient = ghclient('tunadao1');
 
-        ghClient.user('tunadao1').then(res => console.log(res.data));
+        ghClient.me().info().then(res => console.log(res.data));
+        ghClient.me().repositories().then(res => console.log(res.data));
 
-        ghClient.repos({username: 'tunadao1', page: 1}).then(res => console.log(res.data));
+        ghClient.search().user('cauequeiroz').then(res => console.log(res.data));
+        ghClient.search().repository('react').then(res => console.log(res.data));
 
-        ghClient.issues({username: 'tunadao1', repository: 'github-client'}).then(res => console.log(res.data));
+        ghClient.repository('facebook/react').issues().then(res => console.log(res.data));
+        ghClient.repository('facebook/react').commits().then(res => console.log(res.data));
+        ghClient.repository('facebook/react').releases().then(res => console.log(res.data));
+        ghClient.repository('facebook/react').branches().then(res => console.log(res.data));
 
     </script>
 </body>

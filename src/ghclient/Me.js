@@ -1,22 +1,28 @@
 import HttpService from '../services/HttpService';
 import CONFIG from '../config';
 
-class User {
+class Me {
 
   constructor(username) {
 
     if( !username ) throw new Error("Missing username parameter.");
-
     this.username = username;
-    this.httpService = new HttpService();
   }
 
   info() {
 
     const url = `${ CONFIG.urls.base }/users/${ this.username }`;
 
-    return this.httpService.get(url);
+    return HttpService.get(url);
+  }
+
+  repositories(page=1, size=0) {
+
+    const url = `${ CONFIG.urls.base }/users/${ this.username }/repos`;
+    const urlParams = `?page=${ page }${ size ? `&size=${ size }` : '' }`;
+
+    return HttpService.get(`${ url }${ urlParams }`);
   }
 }
 
-export default User;
+export default Me;

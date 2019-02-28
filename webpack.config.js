@@ -8,7 +8,7 @@ module.exports = {
         path: path.join(__dirname, 'dist'),
         libraryTarget: "umd",
         filename: "github-api-client.js",
-        library: "GithubApiClient"
+        library: "ghclient"
     },
     module: {
         loaders: [

@@ -1,12 +1,13 @@
 import axios from 'axios';
+import CONFIG from '../config';
 
 class HttpService {
 
-  get( url ) {
+  static get( url ) {
 
     return axios.get(url, {
       headers: {
-        Authorization: 'token 747be5403a8052f9eca9e7f01da6a43714ba7a2d'
+        Authorization: `token ${ CONFIG.token }`,
       }
     });
   }
