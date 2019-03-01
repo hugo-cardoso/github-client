@@ -392,7 +392,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var CONFIG = {
-  token: '747be5403a8052f9eca9e7f01da6a43714ba7a2d',
+  token: '438dd21a6fb44252dc85bc401b16201c093daff3',
   urls: {
     base: 'https://api.github.com'
   }
@@ -1029,6 +1029,10 @@ var _Repository = __webpack_require__(33);
 
 var _Repository2 = _interopRequireDefault(_Repository);
 
+var _Issue = __webpack_require__(34);
+
+var _Issue2 = _interopRequireDefault(_Issue);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ghclient = function ghclient(username) {
@@ -1041,6 +1045,9 @@ var ghclient = function ghclient(username) {
     },
     repository: function repository(name) {
       return new _Repository2.default(name);
+    },
+    issue: function issue(name, id) {
+      return new _Issue2.default(name, id);
     }
   };
 };
@@ -2029,6 +2036,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _Issue = __webpack_require__(34);
+
+var _Issue2 = _interopRequireDefault(_Issue);
+
 var _HttpService = __webpack_require__(2);
 
 var _HttpService2 = _interopRequireDefault(_HttpService);
@@ -2050,6 +2061,12 @@ var Repository = function () {
   }
 
   _createClass(Repository, [{
+    key: 'issue',
+    value: function issue(id) {
+
+      return new _Issue2.default(this.name, id);
+    }
+  }, {
     key: 'issues',
     value: function issues() {
 
@@ -2079,6 +2096,133 @@ var Repository = function () {
 }();
 
 exports.default = Repository;
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Label = __webpack_require__(35);
+
+var _Label2 = _interopRequireDefault(_Label);
+
+var _HttpService = __webpack_require__(2);
+
+var _HttpService2 = _interopRequireDefault(_HttpService);
+
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Issue = function () {
+  function Issue(name, id) {
+    _classCallCheck(this, Issue);
+
+    if (!name) throw new Error("Missing Name parameter.");
+    if (!id) throw new Error("Missing ID parameter.");
+
+    this.name = name;
+    this.id = id;
+  }
+
+  _createClass(Issue, [{
+    key: 'info',
+    value: function info() {
+
+      var url = _config2.default.urls.base + '/repos/' + this.name + '/issues/' + this.id;
+
+      return _HttpService2.default.get(url);
+    }
+  }, {
+    key: 'comments',
+    value: function comments() {
+
+      var url = _config2.default.urls.base + '/repos/' + this.name + '/issues/' + this.id + '/comments';
+
+      return _HttpService2.default.get(url);
+    }
+  }, {
+    key: 'labels',
+    value: function labels() {
+
+      var url = _config2.default.urls.base + '/repos/' + this.name + '/issues/' + this.id + '/labels';
+
+      return _HttpService2.default.get(url);
+    }
+  }, {
+    key: 'label',
+    value: function label(labelName) {
+      return new _Label2.default(this.name, labelName);
+    }
+  }]);
+
+  return Issue;
+}();
+
+exports.default = Issue;
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _HttpService = __webpack_require__(2);
+
+var _HttpService2 = _interopRequireDefault(_HttpService);
+
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Label = function () {
+  function Label(name, labelName) {
+    _classCallCheck(this, Label);
+
+    if (!name) throw new Error("Missing Name parameter.");
+    if (!labelName) throw new Error("Missing Label Name parameter.");
+
+    this.name = name;
+    this.labelName = labelName;
+  }
+
+  _createClass(Label, [{
+    key: 'info',
+    value: function info() {
+
+      var url = _config2.default.urls.base + '/repos/' + this.name + '/labels/' + this.labelName;
+
+      return _HttpService2.default.get(url);
+    }
+  }]);
+
+  return Label;
+}();
+
+exports.default = Label;
 
 /***/ })
 /******/ ]);

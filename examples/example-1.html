@@ -19,10 +19,16 @@
         ghClient.search().user('cauequeiroz').then(res => console.log(res.data));
         ghClient.search().repository('react').then(res => console.log(res.data));
 
-        ghClient.repository('facebook/react').issues().then(res => console.log(res.data));
-        ghClient.repository('facebook/react').commits().then(res => console.log(res.data));
-        ghClient.repository('facebook/react').releases().then(res => console.log(res.data));
-        ghClient.repository('facebook/react').branches().then(res => console.log(res.data));
+        const repo = ghClient.repository('facebook/react');
+
+        repo.issues().then(res => console.log(res.data));
+        repo.issue(14988).info().then(res => console.log(res.data));
+        repo.issue(14988).comments().then(res => console.log(res.data));
+        repo.issue(14988).labels().then(res => console.log(res.data));
+        repo.issue(14988).label('Type: Discussion').info().then(res => console.log(res.data));
+        repo.commits().then(res => console.log(res.data));
+        repo.releases().then(res => console.log(res.data));
+        repo.branches().then(res => console.log(res.data));
 
     </script>
 </body>

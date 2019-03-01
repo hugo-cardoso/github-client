@@ -1,3 +1,5 @@
+import Issue from './Issue';
+
 import HttpService from '../services/HttpService';
 import CONFIG from '../config';
 
@@ -7,6 +9,11 @@ class Repository {
 
     if( !name ) throw new Error("Missing Name parameter.");
     this.name = name;
+  }
+
+  issue(id) {
+
+    return new Issue(this.name, id);
   }
 
   issues() {
