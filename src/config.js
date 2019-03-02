@@ -1,5 +1,5 @@
 const CONFIG = {
-  token: '438dd21a6fb44252dc85bc401b16201c093daff3',
+  token: '1d5630da68c810d1160053c3be0d4fb9909fe4a2',
   urls: {
     base: 'https://api.github.com'
   }
