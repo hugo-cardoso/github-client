@@ -13,22 +13,26 @@
 
         const ghClient = ghclient('tunadao1');
 
-        ghClient.me().info().then(res => console.log(res.data));
-        ghClient.me().repositories().then(res => console.log(res.data));
+        ghClient.me().info().then(res => console.log(res));
+        ghClient.me().repositories().then(res => console.log(res));
+        ghClient.me().followers().then(res => console.log(res));
+        ghClient.me().following().then(res => console.log(res));
 
-        ghClient.search().user('cauequeiroz').then(res => console.log(res.data));
-        ghClient.search().repository('react').then(res => console.log(res.data));
+        ghClient.search().user('Hugo').then(res => console.log(res));
+        ghClient.search().repository('react').then(res => console.log(res));
 
         const repo = ghClient.repository('facebook/react');
+        const issueId = 14988;
 
-        repo.issues().then(res => console.log(res.data));
-        repo.issue(14988).info().then(res => console.log(res.data));
-        repo.issue(14988).comments().then(res => console.log(res.data));
-        repo.issue(14988).labels().then(res => console.log(res.data));
-        repo.issue(14988).label('Type: Discussion').info().then(res => console.log(res.data));
-        repo.commits().then(res => console.log(res.data));
-        repo.releases().then(res => console.log(res.data));
-        repo.branches().then(res => console.log(res.data));
+        repo.issues().then(res => console.log(res));
+        repo.issue(issueId).info().then(res => console.log(res));
+        repo.issue(issueId).comments().then(res => console.log(res));
+        repo.issue(issueId).labels().then(res => console.log(res));
+        repo.issue(issueId).label('Type: Discussion').info().then(res => console.log(res));
+        repo.issue(issueId).timeline().then(res => console.log(res));
+        repo.commits().then(res => console.log(res));
+        repo.releases().then(res => console.log(res));
+        repo.branches().then(res => console.log(res));
 
     </script>
 </body>

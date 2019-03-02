@@ -1,4 +1,5 @@
 import HttpService from '../services/HttpService';
+import QueryParams from '../utils/QueryParams';
 import CONFIG from '../config';
 
 class Me {
@@ -7,21 +8,35 @@ class Me {
 
     if( !username ) throw new Error("Missing username parameter.");
     this.username = username;
+    this.endpoint = `${ CONFIG.urls.base }/users/${ this.username }`;
   }
 
   info() {
 
-    const url = `${ CONFIG.urls.base }/users/${ this.username }`;
+    return HttpService.get(this.endpoint);
+  }
+
+  repositories(options={}) {
+
+    const { page, limit } = options;
+
+    const url = `${ this.endpoint }/repos`;
+
+    return HttpService.get(`${ url }?${ QueryParams.addPagination(page, limit) }`);
+  }
+
+  followers() {
+
+    const url = `${ this.endpoint }/followers`;
 
     return HttpService.get(url);
   }
 
-  repositories(page=1, size=0) {
+  following() {
 
-    const url = `${ CONFIG.urls.base }/users/${ this.username }/repos`;
-    const urlParams = `?page=${ page }${ size ? `&size=${ size }` : '' }`;
+    const url = `${ this.endpoint }/following`;
 
-    return HttpService.get(`${ url }${ urlParams }`);
+    return HttpService.get(url);
   }
 }
 

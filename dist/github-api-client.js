@@ -392,7 +392,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var CONFIG = {
-  token: '438dd21a6fb44252dc85bc401b16201c093daff3',
+  token: '1d5630da68c810d1160053c3be0d4fb9909fe4a2',
   urls: {
     base: 'https://api.github.com'
   }
@@ -434,10 +434,14 @@ var HttpService = function () {
     key: 'get',
     value: function get(url) {
 
-      return _axios2.default.get(url, {
-        headers: {
-          Authorization: 'token ' + _config2.default.token
-        }
+      return fetch(url, {
+        method: 'GET',
+        headers: new Headers({
+          'Authorization': 'token ' + _config2.default.token,
+          'Accept': 'application/vnd.github.mockingbird-preview, '
+        })
+      }).then(function (res) {
+        return res.json();
       });
     }
   }]);
@@ -1071,6 +1075,10 @@ var _HttpService = __webpack_require__(2);
 
 var _HttpService2 = _interopRequireDefault(_HttpService);
 
+var _QueryParams = __webpack_require__(36);
+
+var _QueryParams2 = _interopRequireDefault(_QueryParams);
+
 var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
@@ -1085,27 +1093,42 @@ var Me = function () {
 
     if (!username) throw new Error("Missing username parameter.");
     this.username = username;
+    this.endpoint = _config2.default.urls.base + '/users/' + this.username;
   }
 
   _createClass(Me, [{
     key: 'info',
     value: function info() {
 
-      var url = _config2.default.urls.base + '/users/' + this.username;
-
-      return _HttpService2.default.get(url);
+      return _HttpService2.default.get(this.endpoint);
     }
   }, {
     key: 'repositories',
     value: function repositories() {
-      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var page = options.page,
+          limit = options.limit;
 
 
-      var url = _config2.default.urls.base + '/users/' + this.username + '/repos';
-      var urlParams = '?page=' + page + (size ? '&size=' + size : '');
+      var url = this.endpoint + '/repos';
 
-      return _HttpService2.default.get('' + url + urlParams);
+      return _HttpService2.default.get(url + '?' + _QueryParams2.default.addPagination(page, limit));
+    }
+  }, {
+    key: 'followers',
+    value: function followers() {
+
+      var url = this.endpoint + '/followers';
+
+      return _HttpService2.default.get(url);
+    }
+  }, {
+    key: 'following',
+    value: function following() {
+
+      var url = this.endpoint + '/following';
+
+      return _HttpService2.default.get(url);
     }
   }]);
 
@@ -1969,6 +1992,10 @@ var _HttpService = __webpack_require__(2);
 
 var _HttpService2 = _interopRequireDefault(_HttpService);
 
+var _QueryParams = __webpack_require__(36);
+
+var _QueryParams2 = _interopRequireDefault(_QueryParams);
+
 var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
@@ -1980,6 +2007,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Search = function () {
   function Search() {
     _classCallCheck(this, Search);
+
+    this.endpoint = _config2.default.urls.base + '/search';
   }
 
   _createClass(Search, [{
@@ -1991,13 +2020,15 @@ var Search = function () {
       if (!query) throw new Error("Missing parameters.");
 
       var sort = options.sort,
-          order = options.order;
+          order = options.order,
+          page = options.page,
+          limit = options.limit;
 
 
-      var url = _config2.default.urls.base + '/search/users';
-      var urlParams = '?q=' + query + (sort ? '&sort=' + sort + (order ? '&order=' + order : '') : '');
+      var url = this.endpoint + '/users';
+      var urlParams = [_QueryParams2.default.addSort(sort, order), _QueryParams2.default.addPagination(page, limit)].join('&');
 
-      return _HttpService2.default.get('' + url + urlParams);
+      return _HttpService2.default.get(url + '?q=' + query + '&' + urlParams);
     }
   }, {
     key: 'repository',
@@ -2008,13 +2039,15 @@ var Search = function () {
       if (!query) throw new Error("Missing parameters.");
 
       var sort = options.sort,
-          order = options.order;
+          order = options.order,
+          page = options.page,
+          limit = options.limit;
 
 
-      var url = _config2.default.urls.base + '/search/repositories';
-      var urlParams = '?q=' + query + (sort ? '&sort=' + sort + (order ? '&order=' + order : '') : '');
+      var url = this.endpoint + '/repositories';
+      var urlParams = [_QueryParams2.default.addSort(sort, order), _QueryParams2.default.addPagination(page, limit)].join('&');
 
-      return _HttpService2.default.get('' + url + urlParams);
+      return _HttpService2.default.get(url + '?q=' + query + '&' + urlParams);
     }
   }]);
 
@@ -2135,21 +2168,20 @@ var Issue = function () {
 
     this.name = name;
     this.id = id;
+    this.endpoint = _config2.default.urls.base + '/repos/' + this.name + '/issues/' + this.id;
   }
 
   _createClass(Issue, [{
     key: 'info',
     value: function info() {
 
-      var url = _config2.default.urls.base + '/repos/' + this.name + '/issues/' + this.id;
-
-      return _HttpService2.default.get(url);
+      return _HttpService2.default.get(this.endpoint);
     }
   }, {
     key: 'comments',
     value: function comments() {
 
-      var url = _config2.default.urls.base + '/repos/' + this.name + '/issues/' + this.id + '/comments';
+      var url = this.endpoint + '/comments';
 
       return _HttpService2.default.get(url);
     }
@@ -2157,7 +2189,7 @@ var Issue = function () {
     key: 'labels',
     value: function labels() {
 
-      var url = _config2.default.urls.base + '/repos/' + this.name + '/issues/' + this.id + '/labels';
+      var url = this.endpoint + '/labels';
 
       return _HttpService2.default.get(url);
     }
@@ -2165,6 +2197,14 @@ var Issue = function () {
     key: 'label',
     value: function label(labelName) {
       return new _Label2.default(this.name, labelName);
+    }
+  }, {
+    key: 'timeline',
+    value: function timeline() {
+
+      var url = this.endpoint + '/timeline';
+
+      return _HttpService2.default.get(url);
     }
   }]);
 
@@ -2223,6 +2263,55 @@ var Label = function () {
 }();
 
 exports.default = Label;
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var QueryParams = function () {
+  function QueryParams() {
+    _classCallCheck(this, QueryParams);
+  }
+
+  _createClass(QueryParams, null, [{
+    key: 'addPagination',
+    value: function addPagination(page, limit) {
+
+      var params = [];
+      if (page) params.push('page=' + page);
+      if (limit) params.push('per_page=' + limit);
+
+      return params.join('&');
+    }
+  }, {
+    key: 'addSort',
+    value: function addSort(sort, order) {
+      var orderName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'order';
+
+
+      var params = [];
+      if (sort) params.push('sort=' + sort);
+      if (sort && order) params.push(orderName + '=' + order);
+
+      return params.join('&');
+    }
+  }]);
+
+  return QueryParams;
+}();
+
+exports.default = QueryParams;
 
 /***/ })
 /******/ ]);

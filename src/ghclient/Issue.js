@@ -12,31 +12,37 @@ class Issue {
 
     this.name = name;
     this.id = id;
+    this.endpoint = `${ CONFIG.urls.base }/repos/${ this.name }/issues/${ this.id }`;
   }
 
   info() {
 
-    const url = `${ CONFIG.urls.base }/repos/${ this.name }/issues/${ this.id }`;
-
-    return HttpService.get(url);
+    return HttpService.get(this.endpoint);
   }
 
   comments() {
 
-    const url = `${ CONFIG.urls.base }/repos/${ this.name }/issues/${ this.id }/comments`;
+    const url = `${ this.endpoint }/comments`;
 
     return HttpService.get(url);
   }
 
   labels() {
 
-    const url = `${ CONFIG.urls.base }/repos/${ this.name }/issues/${ this.id }/labels`;
+    const url = `${ this.endpoint }/labels`;
 
     return HttpService.get(url);
   }
 
   label(labelName) {
     return new Label(this.name, labelName);
+  }
+
+  timeline() {
+
+    const url = `${ this.endpoint }/timeline`;
+
+    return HttpService.get(url);
   }
 }
 
