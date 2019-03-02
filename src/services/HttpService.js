@@ -5,11 +5,13 @@ class HttpService {
 
   static get( url ) {
 
-    return axios.get(url, {
-      headers: {
-        Authorization: `token ${ CONFIG.token }`,
-      }
-    });
+    return fetch( url,{
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `token ${ CONFIG.token }`,
+        'Accept': 'application/vnd.github.mockingbird-preview, '
+      })
+    }).then(res => res.json());
   }
 }
 
